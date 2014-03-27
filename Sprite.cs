@@ -1,8 +1,10 @@
 using System;
+using Sce.PlayStation.Core.Graphics;
+using System.Collections;
 
 namespace NubGameEngine
 {
-	public class Sprite
+	public class Sprite : GameObject
 	{
 		public float x { get; private set; }
 		public float y { get; private set; }
@@ -16,7 +18,6 @@ namespace NubGameEngine
 		int indexSize = 4;
 		
 		Hashtable animations = new Hashtable();
-		int nextAnimationId;
 
 		float[] texcoords = {
 			0.0f, 0.0f,	// 0 top left.
@@ -32,14 +33,14 @@ namespace NubGameEngine
 			1.0f,	1.0f,	1.0f,	1.0f,	// 3 bottom right.
 		};
 		
-		public Sprite (float x, float y, Texture2D texture)
+		public Sprite (float x, float y, Texture2D texture) : base()
 		{
 			ShaderProgram shaderProgram = new ShaderProgram("/Application/shaders/Sprite.cgx");
 			shaderProgram.SetUniformBinding(0, "u_ScreenMatrix");
-			Sprite(x, y, texture, shaderProgram);
+			InitializeSprite(x, y, texture, shaderProgram);
 		}
 
-		private Sprite(float x, float y, Texture2D texture, ShaderProgram shaderProgram)
+		private void InitializeSprite(float x, float y, Texture2D texture, ShaderProgram shaderProgram)
 		{
 			this.texture = texture;
 			this.shaderProgram = shaderProgram;
@@ -68,10 +69,9 @@ namespace NubGameEngine
 
 			//												vertex pos,               texture,       color
 			vertexBuffer = new VertexBuffer(4, indexSize, VertexFormat.Float3, VertexFormat.Float2, VertexFormat.Float4);
-			Game.spriteList.Add(this);
 		}
 		
-		public void Update ()
+		public override void Update ()
 		{
 			
 			// Atualizar a posiçao dos vertices.
@@ -80,10 +80,10 @@ namespace NubGameEngine
 			vertexBuffer.SetVertices(2, colors);
 
 			vertexBuffer.SetIndices(indices);
-			graphics.SetVertexBuffer(0, vertexBuffer);
+			Game.graphics.SetVertexBuffer(0, vertexBuffer);
 		}
 
-		public void Draw(GraphicsContext graphics)
+		public override void Draw(GraphicsContext graphics)
 		{
 			graphics.SetShaderProgram(shaderProgram);
 			graphics.SetTexture(0, texture);
@@ -111,7 +111,7 @@ namespace NubGameEngine
 			vertices[11] = 0.0f;	// z3
 		}
 		
-		public static void SetPosition(float x, float y)
+		public void SetPosition(float x, float y)
 		{
 			vertices[0] = x;	// x0
 			vertices[1] = y;	// y0
@@ -130,9 +130,9 @@ namespace NubGameEngine
 			//vertices[11]=0.0f;	// z3
 		}
 		
-		public int SetAnimation (string name, float duration, params Texture2D frames)
+		public int SetAnimation (string name, float duration, params Texture2D[] frames)
 		{
-			
+			return -1;
 		}
 		
 		public void PlayAnimation (string name)

@@ -1,14 +1,19 @@
 using System;
 using System.Collections.Generic;
+using Sce.PlayStation.Core.Graphics;
+using Sce.PlayStation.Core.Imaging;
+using Sce.PlayStation.Core;
+using Sce.PlayStation.Core.Environment;
 
 namespace NubGameEngine
 {
 	public class Game
 	{
-		protected static GraphicsContext graphics;
+		public static GraphicsContext graphics;
 		public static ImageRect rectScreen;
 		public static Matrix4 screenMatrix;
-		public static List<Sprite> spriteList;
+		public static List<Level> levelList = new List<Level>();
+		int currentLevel = 0;
 		
 		public Game ()
 		{
@@ -35,18 +40,12 @@ namespace NubGameEngine
 		
 		void Update ()
 		{
-			foreach (Sprite s in spriteList)
-			{
-				s.Update();
-			}
+			levelList[currentLevel].Update();
 		}
 		
 		void Render ()
 		{
-			foreach (Sprite s in spriteList)
-			{
-				s.Draw(graphics);
-			}
+			levelList[currentLevel].Draw(graphics);
 		}
 	}
 }

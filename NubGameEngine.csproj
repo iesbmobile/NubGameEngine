@@ -40,6 +40,9 @@
     <Compile Include="Sprite.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Animation.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="Layer.cs" />
+    <Compile Include="Level.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
