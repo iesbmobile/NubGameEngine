@@ -36,17 +36,19 @@
     <Reference Include="Sce.PlayStation.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppMain.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="Example.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
     <ShaderProgram Include="shaders\Simple.vcg" />
+    <ShaderProgram Include="shaders\Sprite.fcg" />
+    <ShaderProgram Include="shaders\Sprite.vcg" />
   </ItemGroup>
   <ItemGroup>
     <PsmMetadata Include="app.xml" />
@@ -58,5 +60,8 @@
     <Folder Include="resource\textures\level1\" />
     <Folder Include="resource\textures\level2\" />
     <Folder Include="resource\textures\level3\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resource\textures\airplane.png" />
   </ItemGroup>
 </Project>

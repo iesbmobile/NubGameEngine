@@ -6,7 +6,7 @@ using Sce.PlayStation.Core;
 using Sce.PlayStation.Core.Environment;
 
 namespace NubGameEngine
-{
+{	
 	public class Game
 	{
 		public static GraphicsContext graphics;
@@ -45,7 +45,11 @@ namespace NubGameEngine
 		
 		void Render ()
 		{
+			graphics.Clear();
+			
 			levelList[currentLevel].Draw(graphics);
+			
+			graphics.SwapBuffers();
 		}
 	}
 }

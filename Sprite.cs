@@ -69,6 +69,7 @@ namespace NubGameEngine
 
 			//												vertex pos,               texture,       color
 			vertexBuffer = new VertexBuffer(4, indexSize, VertexFormat.Float3, VertexFormat.Float2, VertexFormat.Float4);
+			SetPosition(x, y);
 		}
 		
 		public override void Update ()
