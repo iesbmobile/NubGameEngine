@@ -30,6 +30,11 @@ namespace NubGameEngine
 		
 		public void Run ()
 		{
+			if (levelList.Count == 0)
+			{
+				throw new ApplicationException("Nao ha nenhum Level criado. Eh necessario adicionar pelo menos um Level ao Game para inicia-lo. Game.cs Run()");
+			}
+			
 			while (true)
 			{
 				SystemEvents.CheckEvents();

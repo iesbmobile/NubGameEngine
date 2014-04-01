@@ -63,5 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="resource\textures\airplane.png" />
+    <Content Include="resource\textures\jumpingpumpkin.png" />
   </ItemGroup>
 </Project>
