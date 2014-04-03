@@ -4,6 +4,9 @@ using Sce.PlayStation.Core.Graphics;
 
 namespace NubGameEngine
 {
+	/// <summary>
+	/// O Level guarda todas as informacoes de uma cena do jogo. Ele eh um grupo de Layers.
+	/// </summary>
 	public class Level : GameObject
 	{
 		List<Layer> layerList = new List<Layer>();

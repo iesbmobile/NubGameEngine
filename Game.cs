@@ -7,12 +7,31 @@ using Sce.PlayStation.Core.Environment;
 
 namespace NubGameEngine
 {	
+	/// <summary>
+	/// Instancia do jogo rodando. Deve ter apenas um ativo a cada execuçao do programa.
+	/// </summary>
+	/// <exception cref='ApplicationException'>
+	/// Eh lancado quando o metodo Run() eh chamado sem que haja um Level adicionado.
+	/// </exception>
 	public class Game
 	{
 		public static GraphicsContext graphics;
 		public static ImageRect rectScreen;
 		public static Matrix4 screenMatrix;
 		public static List<Level> levelList = new List<Level>();
+		public static List<Animation> playingAnimationsList = new List<Animation>();
+		
+		/// <summary>
+		/// Tempo desde o inicio do programa em milisegundos.
+		/// </summary>
+		public static long time
+		{
+			get 
+			{
+				return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+			}
+		}
+		
 		int currentLevel = 0;
 		
 		public Game ()
@@ -39,6 +58,7 @@ namespace NubGameEngine
 			{
 				SystemEvents.CheckEvents();
 				Update();
+				UpdateAnimations();
 				Render();
 			}
 		}
@@ -55,6 +75,22 @@ namespace NubGameEngine
 			levelList[currentLevel].Draw(graphics);
 			
 			graphics.SwapBuffers();
+		}
+		
+		void UpdateAnimations ()
+		{
+			for (int i = 0; i < playingAnimationsList.Count; i++)
+			{
+				if (playingAnimationsList[i].playing)
+				{
+					playingAnimationsList[i].UpdateAnimation();
+				}
+				else
+				{
+					playingAnimationsList.RemoveAt(i);
+					i--;
+				}
+			}
 		}
 	}
 }

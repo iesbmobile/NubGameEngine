@@ -1,14 +1,6 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Sprite.cs">
-    <Files>
-      <File FileName="Example.cs" Line="19" Column="23" />
-      <File FileName="Level.cs" Line="21" Column="33" />
-      <File FileName="Game.cs" Line="38" Column="16" />
-      <File FileName="Animation.cs" Line="21" Column="28" />
-      <File FileName="Sprite.cs" Line="109" Column="4" />
-      <File FileName="Layer.cs" Line="20" Column="33" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -18,7 +10,7 @@
               <Node name="textures" expanded="True" />
             </Node>
             <Node name="shaders" expanded="True" />
-            <Node name="Sprite.cs" selected="True" />
+            <Node name="Layer.cs" selected="True" />
           </Node>
         </State>
       </Pad>
