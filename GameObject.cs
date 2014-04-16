@@ -1,5 +1,6 @@
 using System;
 using Sce.PlayStation.Core.Graphics;
+using System.Collections.Generic;
 
 namespace NubGameEngine
 {
@@ -8,9 +9,11 @@ namespace NubGameEngine
 	/// </summary>
 	public class GameObject
 	{
+		List<Component> components = new List<Component>();
 		
 		public GameObject ()
 		{
+
 		}
 		
 		public virtual void Update ()

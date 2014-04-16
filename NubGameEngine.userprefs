@@ -5,11 +5,6 @@
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="NubGameEngine" expanded="True">
-            <Node name="References" expanded="True" />
-            <Node name="resource" expanded="True">
-              <Node name="textures" expanded="True" />
-            </Node>
-            <Node name="shaders" expanded="True" />
             <Node name="Layer.cs" selected="True" />
           </Node>
         </State>
