@@ -37,7 +37,15 @@ namespace NubGameEngine
 			
 			foreach (Sprite s in spriteList)
 			{
-				s.Draw(graphics);
+				s.Draw (graphics);
+			}
+		}
+		
+		public void Translate (float x, float y)
+		{
+			foreach (Sprite s in spriteList)
+			{
+				s.Translate(x, y);
 			}
 		}
 	}
