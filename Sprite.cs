@@ -16,6 +16,8 @@ namespace NubGameEngine
 		
 		public Texture2D texture;
 		
+		public string tag = "Untagged";
+		
 		ShaderProgram shaderProgram;
 		float[] vertices = new float[12];
 		ushort[] indices;
