@@ -18,6 +18,8 @@ namespace NubGameEngine
 		
 		public string tag = "Untagged";
 		
+		protected Collider collider = null;
+		
 		ShaderProgram shaderProgram;
 		float[] vertices = new float[12];
 		ushort[] indices;
@@ -156,22 +158,25 @@ namespace NubGameEngine
 		/// <param name='graphics'>
 		/// Contexto grafico em que o Sprite sera mostrado
 		/// </param>
-		public override void Draw(GraphicsContext graphics)
+		public override void Draw (GraphicsContext graphics)
 		{
-			base.Draw(graphics);
+			base.Draw (graphics);
 			
-			graphics.SetShaderProgram(shaderProgram);
-			graphics.SetTexture(0, texture);
-			shaderProgram.SetUniformValue(0, ref Game.screenMatrix);
+			graphics.Enable (EnableMode.Blend);
+			graphics.SetBlendFunc(BlendFuncMode.Add, BlendFuncFactor.SrcAlpha, BlendFuncFactor.OneMinusSrcAlpha);
+			
+			graphics.SetShaderProgram (shaderProgram);
+			graphics.SetTexture (0, texture);
+			shaderProgram.SetUniformValue (0, ref Game.screenMatrix);
 			
 			// Atualizar a posiçao dos vertices.
-			vertexBuffer.SetVertices(0, vertices);
-			vertexBuffer.SetVertices(1, texcoords);
-			vertexBuffer.SetVertices(2, colors);
+			vertexBuffer.SetVertices (0, vertices);
+			vertexBuffer.SetVertices (1, texcoords);
+			vertexBuffer.SetVertices (2, colors);
 
-			vertexBuffer.SetIndices(indices);
-			Game.graphics.SetVertexBuffer(0, vertexBuffer);
-			graphics.DrawArrays(DrawMode.TriangleStrip, 0, indexSize);
+			vertexBuffer.SetIndices (indices);
+			Game.graphics.SetVertexBuffer (0, vertexBuffer);
+			graphics.DrawArrays (DrawMode.TriangleStrip, 0, indexSize);
 		}
 		
 		/// <summary>
@@ -242,32 +247,43 @@ namespace NubGameEngine
 		public void SetFrame (float index)
 		{
 			if (currentFrame == index)
+			{
 				return;
+			}
 			
 			if (index > texture.Width / _width)
 			{
-				throw new ApplicationException("O sprite "+ToString()+" nao possui um frame de numero "+index);
+				throw new ApplicationException ("O sprite " + ToString () + " nao possui um frame de numero " + index);
 			}
 			
 			currentFrame = index;
 			// 0 top left.
-			texcoords[0] = (index * (float)_width) / (float)texture.Width;
-			texcoords[1] = 0.0f;
+			texcoords [0] = (index * (float)_width) / (float)texture.Width;
+			texcoords [1] = 0.0f;
 			
 			// 1 bottom left.
-			texcoords[2] = (index * _width) / texture.Width;
-			texcoords[3] = 1.0f;
+			texcoords [2] = (index * _width) / texture.Width;
+			texcoords [3] = 1.0f;
 			
 			// 2 top right.
-			texcoords[4] = (_width + index * _width) / texture.Width;
-			texcoords[5] = 0.0f;
+			texcoords [4] = (_width + index * _width) / texture.Width;
+			texcoords [5] = 0.0f;
 			
 			// 3 bottom right.
-			texcoords[6] = (_width + index * _width) / texture.Width;
-			texcoords[7] = 1.0f;
+			texcoords [6] = (_width + index * _width) / texture.Width;
+			texcoords [7] = 1.0f;
+		}
+		
+		public void AddCollider (int width, int height)
+		{
+			collider = new Collider(this, width, height);
+		}
+		
+		public virtual void OnCollision (Collider other)
+		{
+			
 		}
 	}
-	
 	
 }
 

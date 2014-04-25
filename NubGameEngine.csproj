@@ -43,6 +43,7 @@
     <Compile Include="Layer.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Example.cs" />
+    <Compile Include="Collider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />

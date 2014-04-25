@@ -20,6 +20,7 @@ namespace NubGameEngine
 		public static Matrix4 screenMatrix;
 		public static List<Level> levelList = new List<Level>();
 		public static List<Animation> playingAnimationsList = new List<Animation>();
+		public static List<Collider> colliderList = new List<Collider>();
 		
 		/// <summary>
 		/// Tempo desde o inicio do programa em milisegundos.
@@ -51,15 +52,16 @@ namespace NubGameEngine
 		{
 			if (levelList.Count == 0)
 			{
-				throw new ApplicationException("Nao ha nenhum Level criado. Eh necessario adicionar pelo menos um Level ao Game para inicia-lo. Game.cs Run()");
+				throw new ApplicationException ("Nao ha nenhum Level criado. Eh necessario adicionar pelo menos um Level ao Game para inicia-lo. Game.cs Run()");
 			}
 			
 			while (true)
 			{
-				SystemEvents.CheckEvents();
-				Update();
-				UpdateAnimations();
-				Render();
+				SystemEvents.CheckEvents ();
+				Update ();
+				UpdatePhysics();
+				UpdateAnimations ();
+				Render ();
 			}
 		}
 		
@@ -81,14 +83,30 @@ namespace NubGameEngine
 		{
 			for (int i = 0; i < playingAnimationsList.Count; i++)
 			{
-				if (playingAnimationsList[i].playing)
+				if (playingAnimationsList [i].playing)
 				{
-					playingAnimationsList[i].UpdateAnimation();
+					playingAnimationsList [i].UpdateAnimation ();
 				}
 				else
 				{
-					playingAnimationsList.RemoveAt(i);
+					playingAnimationsList.RemoveAt (i);
 					i--;
+				}
+			}
+		}
+		
+		void UpdatePhysics ()
+		{
+			for (int i = 0; i < colliderList.Count; i++)
+			{
+				colliderList [i].UpdateAccordingToSprite ();
+			}
+			
+			for (int i = 0; i < colliderList.Count; i++)
+			{
+				for (int j = i+1; j < colliderList.Count; i++)
+				{
+					colliderList [i].CheckCollision(colliderList [j]);
 				}
 			}
 		}

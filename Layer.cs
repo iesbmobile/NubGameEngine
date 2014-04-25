@@ -25,20 +25,30 @@ namespace NubGameEngine
 		{
 			base.Update ();
 			
-			foreach (Sprite s in spriteList)
+			for (int i = spriteList.Count - 1; i >= 0; i--)
 			{
-				s.Update();
+				spriteList[i].Update();
 			}
+			
+//			foreach (Sprite s in spriteList)
+//			{
+//				s.Update ();
+//			}
 		}
 		
 		public override void Draw (GraphicsContext graphics)
 		{
 			base.Draw (graphics);
 			
-			foreach (Sprite s in spriteList)
+			for (int i = spriteList.Count - 1; i >= 0; i--)
 			{
-				s.Draw (graphics);
+				spriteList[i].Draw(graphics);
 			}
+			
+//			foreach (Sprite s in spriteList)
+//			{
+//				s.Draw (graphics);
+//			}
 		}
 		
 		/// <summary>
@@ -52,10 +62,15 @@ namespace NubGameEngine
 		/// </param>
 		public void Translate (float x, float y)
 		{
-			foreach (Sprite s in spriteList)
+			for (int i = spriteList.Count - 1; i >= 0; i--)
 			{
-				s.Translate (x, y);
+				spriteList[i].Translate(x, y);
 			}
+			
+//			foreach (Sprite s in spriteList)
+//			{
+//				s.Translate (x, y);
+//			}
 		}
 		
 		/// <summary>

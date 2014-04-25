@@ -1,15 +1,21 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Layer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Sprite.cs">
     <Files>
-      <File FileName="Layer.cs" Line="28" Column="36" />
+      <File FileName="GameObject.cs" Line="1" Column="1" />
+      <File FileName="Sprite.cs" Line="279" Column="49" />
+      <File FileName="Collider.cs" Line="34" Column="46" />
+      <File FileName="Game.cs" Line="107" Column="51" />
+      <File FileName="Level.cs" Line="8" Column="35" />
+      <File FileName="Layer.cs" Line="67" Column="32" />
+      <File FileName="Animation.cs" Line="40" Column="21" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="NubGameEngine" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="Layer.cs" selected="True" />
+            <Node name="Sprite.cs" selected="True" />
           </Node>
         </State>
       </Pad>

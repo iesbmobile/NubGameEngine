@@ -25,9 +25,9 @@ namespace NubGameEngine
 		{
 			base.Update ();
 			
-			foreach (Layer l in layerList)
+			for (int i = layerList.Count - 1; i >= 0; i--)
 			{
-				l.Update();
+				layerList[i].Update();
 			}
 		}
 		
@@ -35,9 +35,9 @@ namespace NubGameEngine
 		{
 			base.Draw (graphics);
 			
-			foreach (Layer l in layerList)
+			for (int i = layerList.Count - 1; i >= 0; i--)
 			{
-				l.Draw(graphics);
+				layerList [i].Draw (graphics);
 			}
 		}
 	}

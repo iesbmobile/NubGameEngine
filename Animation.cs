@@ -37,7 +37,7 @@ namespace NubGameEngine
 		/// <param name='endIndex'>
 		/// Indice do frame em que termina esta animaçao.
 		/// </param>
-		public Animation (ref Sprite targetSprite, string name, long frameDuration, int startIndex, int endIndex)
+		public Animation (Sprite targetSprite, string name, long frameDuration, int startIndex, int endIndex)
 		{
 			this.targetSprite = targetSprite;
 			this.name = name;
