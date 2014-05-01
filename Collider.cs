@@ -33,10 +33,11 @@ namespace NubGameEngine
 		
 		public void CheckCollision (Collider other)
 		{
-			bool collision = !(other.collVertices [0] > collVertices [2] || 
-			          other.collVertices [2] > collVertices [0] || 
-			          other.collVertices [1] > collVertices [3] ||
-			          other.collVertices [3] > collVertices [1]);
+			bool collision = (collVertices[2] > other.collVertices[0] &&
+			                  collVertices[1] < other.collVertices[3] &&
+			                  collVertices[3] > other.collVertices[1] &&
+			                  collVertices[0] < other.collVertices[2]);
+				
 			if (collision)
 			{
 				sprite.OnCollision (other);

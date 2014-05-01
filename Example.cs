@@ -7,10 +7,16 @@ using Sce.PlayStation.Core.Graphics;
 /// </summary>
 public class Example
 {
-	static Level level1;
+	
 	
 	public static void Main(string[] args)
 	{
+		
+		FireInTheSkyVita game = new FireInTheSkyVita();
+		
+		game.Run();
+		
+		/*
 		Game game = new Game();
 		
 		//Quando um level eh instanciado, ele ja eh adicionado ao game automaticamente.
@@ -27,13 +33,15 @@ public class Example
 		//Para animar um sprite, e preciso usar o construtor Sprite(float, float, Texture2D, int, int)
 		Sprite animatedPumpkin = new Sprite(0.0f, 100.0f, new Texture2D("/Application/resource/textures/jumpingpumpkin.png", false), 41, 57);
 		//Instanciar uma animacao com referencia ao Sprite
-		Animation pumpkinJump = new Animation(ref animatedPumpkin, "Jump", 100L, 0, 8);
+		Animation pumpkinJump = new Animation(animatedPumpkin, "Jump", 100L, 0, 8);
 		l1.AddSprite(animatedPumpkin);
 		//Tocar a animaçao com loop
 		pumpkinJump.Play(true);
 		
 		//Roda o jogo
 		game.Run();
+		
+		*/
 	}	
 }
 

@@ -1,13 +1,69 @@
 using System;
 using Sce.PlayStation.Core.Graphics;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NubGameEngine
 {
 	public class Sprite : GameObject
 	{
-		public float x { get { return vertices[0]; } }
-		public float y { get { return vertices[1]; } }
+		public float x { get { return vertices[0] - xOffset; } }
+		public float y { get { return vertices[1] - yOffset; } }
+		
+		Pivot _pivot = Pivot.TopLeft;
+		public Pivot pivot
+		{
+			get { return _pivot; }
+			set
+			{
+				if (value == _pivot)
+					return;
+				
+				switch (value)
+				{
+				case Pivot.TopLeft:
+					xOffset = 0;
+					yOffset = 0;
+					break;
+				case Pivot.Top:
+					xOffset = -width/2;
+					yOffset = 0;
+					break;
+				case Pivot.TopRight:
+					xOffset = -width;
+					yOffset = 0;
+					break;
+				case Pivot.Left:
+					xOffset = 0;
+					yOffset = -height/2;
+					break;
+				case Pivot.Center:
+					xOffset = -width/2;
+					yOffset = -height/2;
+					break;
+				case Pivot.Right:
+					xOffset = -width;
+					yOffset = -height/2;
+					break;
+				case Pivot.BottomLeft:
+					xOffset = 0;
+					yOffset = -height;
+					break;
+				case Pivot.Bottom:
+					xOffset = -width/2;
+					yOffset = -height;
+					break;
+				case Pivot.BottomRight:
+					xOffset = -width;
+					yOffset = -height;
+					break;
+				}
+				_pivot = value;
+			}
+		}
+		int xOffset = 0;
+		int yOffset = 0;
+		
 		int _width = 0;
 		public int width { get { return _width; } }
 		int _height = 0;
@@ -19,6 +75,7 @@ namespace NubGameEngine
 		public string tag = "Untagged";
 		
 		protected Collider collider = null;
+		public List<Behaviour> behaviourList = new List<Behaviour>();
 		
 		ShaderProgram shaderProgram;
 		float[] vertices = new float[12];
@@ -54,6 +111,18 @@ namespace NubGameEngine
 		/// A textura a ser aplicada.
 		/// </param>
 		public Sprite (float x, float y, Texture2D texture) : this(x, y, texture, 0, 0) {}
+		
+		public Sprite (float x, float y, Texture2D texture, Pivot pivot) : this(x, y, texture, 0, 0)
+		{
+			this.pivot = pivot;
+			SetPosition(vertices[0], vertices[1]);
+		}
+		
+		public Sprite (float x, float y, Texture2D texture, int width, int height, Pivot pivot) : this(x, y, texture, width, height)
+		{
+			this.pivot = pivot;
+			SetPosition(vertices[0], vertices[1]);
+		}
 		
 		/// <summary>
 		/// Cria um Sprite com animaçao. Os frames devem estar dispostos todos um ao lado do outro na textura.
@@ -150,6 +219,11 @@ namespace NubGameEngine
 		{
 			base.Update();
 			
+			BlinkUpdate();
+			for (int i = 0; i < behaviourList.Count; i++)
+			{
+				behaviourList[i].Update();
+			}
 		}
 		
 		/// <summary>
@@ -218,20 +292,20 @@ namespace NubGameEngine
 		/// </param>
 		public void SetPosition(float x, float y)
 		{			
-			vertices[0] = x;	// x0
-			vertices[1] = y;	// y0
+			vertices[0] = x + xOffset;	// x0
+			vertices[1] = y + yOffset;	// y0
 			//vertices[2]=0.0f;	// z0
 
-			vertices[3] = x;	// x1
-			vertices[4] = _height + y;	// y1
+			vertices[3] = x + xOffset;	// x1
+			vertices[4] = _height + y + yOffset;	// y1
 			//vertices[5]=0.0f;	// z1
 
-			vertices[6] = _width + x;	// x2
-			vertices[7] = y;	// y2
+			vertices[6] = _width + x + xOffset;	// x2
+			vertices[7] = y + yOffset;	// y2
 			//vertices[8]=0.0f;	// z2
 
-			vertices[9] = _width + x;	// x3
-			vertices[10] = _height + y;	// y3
+			vertices[9] = _width + x + xOffset;	// x3
+			vertices[10] = _height + y + yOffset;	// y3
 			//vertices[11]=0.0f;	// z3
 		}
 		
@@ -281,7 +355,36 @@ namespace NubGameEngine
 		
 		public virtual void OnCollision (Collider other)
 		{
-			
+			Console.WriteLine("Collision "+this.ToString());
+			SetBlinkEffect(20);
+			for (int i = 0; i < behaviourList.Count; i++)
+			{
+				behaviourList[i].OnCollision (other);
+			}
+		}
+		
+		public void AddBehaviour (Behaviour newBehaviour)
+		{
+			behaviourList.Add(newBehaviour);
+		}
+		
+		int blinkEffectCounter = 0;
+		public void SetBlinkEffect (int frameDuration)
+		{
+			blinkEffectCounter = frameDuration;
+		}
+		
+		void BlinkUpdate ()
+		{
+			blinkEffectCounter--;
+			if (blinkEffectCounter > 0)
+			{
+				colors[3] = colors[7] = colors[11] = colors[15] = blinkEffectCounter % 2;
+			}
+			else
+			{
+				colors[3] = colors[7] = colors[11] = colors[15] = 1;
+			}
 		}
 	}
 	

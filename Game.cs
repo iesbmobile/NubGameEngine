@@ -18,6 +18,8 @@ namespace NubGameEngine
 		public static GraphicsContext graphics;
 		public static ImageRect rectScreen;
 		public static Matrix4 screenMatrix;
+		
+		
 		public static List<Level> levelList = new List<Level>();
 		public static List<Animation> playingAnimationsList = new List<Animation>();
 		public static List<Collider> colliderList = new List<Collider>();
@@ -33,7 +35,7 @@ namespace NubGameEngine
 			}
 		}
 		
-		int currentLevel = 0;
+		static int currentLevel = 0;
 		
 		public Game ()
 		{
@@ -46,14 +48,16 @@ namespace NubGameEngine
 				 0.0f, 0.0f, 1.0f, 0.0f,
 				 -1.0f, 1.0f, 0.0f, 1.0f
 			);
+			
+			Level emptyLevel = new Level();
 		}
 		
 		public void Run ()
 		{
-			if (levelList.Count == 0)
-			{
-				throw new ApplicationException ("Nao ha nenhum Level criado. Eh necessario adicionar pelo menos um Level ao Game para inicia-lo. Game.cs Run()");
-			}
+//			if (levelList.Count == 0)
+//			{
+//				throw new ApplicationException ("Nao ha nenhum Level criado. Eh necessario adicionar pelo menos um Level ao Game para inicia-lo. Game.cs Run()");
+//			}
 			
 			while (true)
 			{
@@ -65,12 +69,12 @@ namespace NubGameEngine
 			}
 		}
 		
-		void Update ()
+		protected virtual void Update ()
 		{
 			levelList[currentLevel].Update();
 		}
 		
-		void Render ()
+		protected virtual void Render ()
 		{
 			graphics.Clear();
 			
@@ -81,15 +85,15 @@ namespace NubGameEngine
 		
 		void UpdateAnimations ()
 		{
-			for (int i = 0; i < playingAnimationsList.Count; i++)
+			for (int i = 0; i < Game.playingAnimationsList.Count; i++)
 			{
-				if (playingAnimationsList [i].playing)
+				if (Game.playingAnimationsList [i].playing)
 				{
-					playingAnimationsList [i].UpdateAnimation ();
+					Game.playingAnimationsList [i].UpdateAnimation ();
 				}
 				else
 				{
-					playingAnimationsList.RemoveAt (i);
+					Game.playingAnimationsList.RemoveAt (i);
 					i--;
 				}
 			}
@@ -99,16 +103,25 @@ namespace NubGameEngine
 		{
 			for (int i = 0; i < colliderList.Count; i++)
 			{
-				colliderList [i].UpdateAccordingToSprite ();
+				Game.colliderList[i].UpdateAccordingToSprite ();
 			}
 			
 			for (int i = 0; i < colliderList.Count; i++)
 			{
-				for (int j = i+1; j < colliderList.Count; i++)
+				for (int j = i+1; j < colliderList.Count; j++)
 				{
-					colliderList [i].CheckCollision(colliderList [j]);
+					Game.colliderList[i].CheckCollision(colliderList [j]);
 				}
 			}
+		}
+		
+		public static void SetLevel (int index)
+		{
+			if (index >= levelList.Count)
+			{
+				return;
+			}
+			currentLevel = index;
 		}
 	}
 }
