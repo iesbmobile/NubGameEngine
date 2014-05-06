@@ -356,7 +356,6 @@ namespace NubGameEngine
 		public virtual void OnCollision (Collider other)
 		{
 			Console.WriteLine("Collision "+this.ToString());
-			SetBlinkEffect(20);
 			for (int i = 0; i < behaviourList.Count; i++)
 			{
 				behaviourList[i].OnCollision (other);
@@ -365,7 +364,8 @@ namespace NubGameEngine
 		
 		public void AddBehaviour (Behaviour newBehaviour)
 		{
-			behaviourList.Add(newBehaviour);
+			behaviourList.Add (newBehaviour);
+			newBehaviour.SetSprite(this);
 		}
 		
 		int blinkEffectCounter = 0;

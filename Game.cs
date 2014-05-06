@@ -4,6 +4,7 @@ using Sce.PlayStation.Core.Graphics;
 using Sce.PlayStation.Core.Imaging;
 using Sce.PlayStation.Core;
 using Sce.PlayStation.Core.Environment;
+using Sce.PlayStation.Core.Input;
 
 namespace NubGameEngine
 {	
@@ -18,7 +19,7 @@ namespace NubGameEngine
 		public static GraphicsContext graphics;
 		public static ImageRect rectScreen;
 		public static Matrix4 screenMatrix;
-		
+		public static GamePadData gamePadData;
 		
 		public static List<Level> levelList = new List<Level>();
 		public static List<Animation> playingAnimationsList = new List<Animation>();
@@ -62,8 +63,9 @@ namespace NubGameEngine
 			while (true)
 			{
 				SystemEvents.CheckEvents ();
+				gamePadData = GamePad.GetData(0);
 				Update ();
-				UpdatePhysics();
+				UpdatePhysics ();
 				UpdateAnimations ();
 				Render ();
 			}

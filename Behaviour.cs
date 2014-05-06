@@ -6,9 +6,13 @@ namespace NubGameEngine
 	{
 		protected Sprite sprite;
 		
-		public Behaviour (Sprite sprite)
+		public Behaviour ()
 		{
-			sprite.AddBehaviour(this);
+		}
+		
+		public void SetSprite (Sprite sprite)
+		{
+			this.sprite = sprite;
 		}
 		
 		public virtual void Update ()

@@ -47,6 +47,9 @@
     <Compile Include="Pivot.cs" />
     <Compile Include="FireInTheSkyVita.cs" />
     <Compile Include="Behaviour.cs" />
+    <Compile Include="BehaviourFloorMove.cs" />
+    <Compile Include="LayerBackground.cs" />
+    <Compile Include="BehaviourPlayerMove.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
