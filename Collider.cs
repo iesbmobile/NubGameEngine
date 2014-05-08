@@ -4,6 +4,8 @@ namespace NubGameEngine
 {
 	public class Collider
 	{
+		public bool active = true;
+		
 		public Sprite sprite { get; private set; }
 		
 		public float[] collVertices { get; private set; }
@@ -25,15 +27,18 @@ namespace NubGameEngine
 		
 		public void UpdateAccordingToSprite ()
 		{
-			collVertices [0] = sprite.x - halfWidth;
-			collVertices [1] = sprite.y - halfHeight;
-			collVertices [2] = sprite.x + halfWidth;
-			collVertices [3] = sprite.y + halfHeight;
+			if (active)
+			{
+				collVertices [0] = sprite.x - halfWidth;
+				collVertices [1] = sprite.y - halfHeight;
+				collVertices [2] = sprite.x + halfWidth;
+				collVertices [3] = sprite.y + halfHeight;
+			}
 		}
 		
 		public void CheckCollision (Collider other)
 		{
-			bool collision = (collVertices[2] > other.collVertices[0] &&
+			bool collision = active && (collVertices[2] > other.collVertices[0] &&
 			                  collVertices[1] < other.collVertices[3] &&
 			                  collVertices[3] > other.collVertices[1] &&
 			                  collVertices[0] < other.collVertices[2]);

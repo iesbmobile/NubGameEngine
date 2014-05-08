@@ -20,6 +20,7 @@ namespace NubGameEngine
 			{
 				sprite.Translate (speed, 0);
 			}
+			
 			if ((Game.gamePadData.Buttons & GamePadButtons.Up) != 0)
 			{
 				sprite.Translate (0, -speed);

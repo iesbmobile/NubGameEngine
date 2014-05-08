@@ -1,21 +1,6 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BehaviourPlayerMove.cs">
-    <Files>
-      <File FileName="FireInTheSkyVita.cs" Line="32" Column="51" />
-      <File FileName="Example.cs" Line="36" Column="78" />
-      <File FileName="Game.cs" Line="66" Column="38" />
-      <File FileName="Collider.cs" Line="40" Column="5" />
-      <File FileName="Sprite.cs" Line="368" Column="26" />
-      <File FileName="Level.cs" Line="16" Column="4" />
-      <File FileName="Animation.cs" Line="16" Column="28" />
-      <File FileName="Behaviour.cs" Line="9" Column="22" />
-      <File FileName="GameObject.cs" Line="17" Column="4" />
-      <File FileName="BehaviourFloorMove.cs" Line="6" Column="3" />
-      <File FileName="LayerBackground.cs" Line="13" Column="20" />
-      <File FileName="Layer.cs" Line="21" Column="30" />
-      <File FileName="BehaviourPlayerMove.cs" Line="14" Column="62" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">

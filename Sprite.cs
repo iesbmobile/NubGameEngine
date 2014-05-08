@@ -73,9 +73,11 @@ namespace NubGameEngine
 		public Texture2D texture;
 		
 		public string tag = "Untagged";
+		public bool active = true;
 		
 		protected Collider collider = null;
 		public List<Behaviour> behaviourList = new List<Behaviour>();
+		public List<Sprite> children = new List<Sprite>();
 		
 		ShaderProgram shaderProgram;
 		float[] vertices = new float[12];
@@ -217,12 +219,16 @@ namespace NubGameEngine
 		/// </summary>
 		public override void Update ()
 		{
-			base.Update();
+			base.Update ();
 			
-			BlinkUpdate();
-			for (int i = 0; i < behaviourList.Count; i++)
+			if (active)
 			{
-				behaviourList[i].Update();
+				BlinkUpdate ();
+			
+				for (int i = 0; i < behaviourList.Count; i++)
+				{
+					behaviourList [i].Update ();
+				}
 			}
 		}
 		
@@ -236,21 +242,29 @@ namespace NubGameEngine
 		{
 			base.Draw (graphics);
 			
-			graphics.Enable (EnableMode.Blend);
-			graphics.SetBlendFunc(BlendFuncMode.Add, BlendFuncFactor.SrcAlpha, BlendFuncFactor.OneMinusSrcAlpha);
+			if (active)
+			{
+				graphics.Enable (EnableMode.Blend);
+				graphics.SetBlendFunc (BlendFuncMode.Add, BlendFuncFactor.SrcAlpha, BlendFuncFactor.OneMinusSrcAlpha);
 			
-			graphics.SetShaderProgram (shaderProgram);
-			graphics.SetTexture (0, texture);
-			shaderProgram.SetUniformValue (0, ref Game.screenMatrix);
+				graphics.SetShaderProgram (shaderProgram);
+				graphics.SetTexture (0, texture);
+				shaderProgram.SetUniformValue (0, ref Game.screenMatrix);
 			
-			// Atualizar a posiçao dos vertices.
-			vertexBuffer.SetVertices (0, vertices);
-			vertexBuffer.SetVertices (1, texcoords);
-			vertexBuffer.SetVertices (2, colors);
+				// Atualizar a posiçao dos vertices.
+				vertexBuffer.SetVertices (0, vertices);
+				vertexBuffer.SetVertices (1, texcoords);
+				vertexBuffer.SetVertices (2, colors);
 
-			vertexBuffer.SetIndices (indices);
-			Game.graphics.SetVertexBuffer (0, vertexBuffer);
-			graphics.DrawArrays (DrawMode.TriangleStrip, 0, indexSize);
+				vertexBuffer.SetIndices (indices);
+				Game.graphics.SetVertexBuffer (0, vertexBuffer);
+				graphics.DrawArrays (DrawMode.TriangleStrip, 0, indexSize);
+			
+				for (int i = 0; i < children.Count; i++)
+				{
+					children [i].Draw (graphics);
+				}
+			}
 		}
 		
 		/// <summary>
@@ -262,23 +276,28 @@ namespace NubGameEngine
 		/// <param name='y'>
 		/// Quanto o Sprite sera movido em Y.
 		/// </param>
-		public void Translate(float x, float y)
+		public void Translate (float x, float y)
 		{
-			vertices[0] += x;	// x0
-			vertices[1] += y;	// y0
-			vertices[2] = 0.0f;	// z0
+			vertices [0] += x;	// x0
+			vertices [1] += y;	// y0
+			vertices [2] = 0.0f;	// z0
 
-			vertices[3] += x;	// x1
-			vertices[4] += y;	// y1
-			vertices[5] = 0.0f;	// z1
+			vertices [3] += x;	// x1
+			vertices [4] += y;	// y1
+			vertices [5] = 0.0f;	// z1
 
-			vertices[6] += x;	// x2
-			vertices[7] += y;	// y2
-			vertices[8] = 0.0f;	// z2
+			vertices [6] += x;	// x2
+			vertices [7] += y;	// y2
+			vertices [8] = 0.0f;	// z2
 
-			vertices[9] += x; // x3
-			vertices[10] += y; // y3
-			vertices[11] = 0.0f;	// z3
+			vertices [9] += x; // x3
+			vertices [10] += y; // y3
+			vertices [11] = 0.0f;	// z3
+			
+			for (int i = 0; i < children.Count; i++)
+			{
+				children [i].Translate(x, y);
+			}
 		}
 		
 		/// <summary>
@@ -290,23 +309,27 @@ namespace NubGameEngine
 		/// <param name='y'>
 		/// Y.
 		/// </param>
-		public void SetPosition(float x, float y)
-		{			
-			vertices[0] = x + xOffset;	// x0
-			vertices[1] = y + yOffset;	// y0
+		public void SetPosition (float x, float y)
+		{
+			Translate (x - this.x, y - this.y);
+			
+			/*
+			vertices [0] = x + xOffset;	// x0
+			vertices [1] = y + yOffset;	// y0
 			//vertices[2]=0.0f;	// z0
 
-			vertices[3] = x + xOffset;	// x1
-			vertices[4] = _height + y + yOffset;	// y1
+			vertices [3] = x + xOffset;	// x1
+			vertices [4] = _height + y + yOffset;	// y1
 			//vertices[5]=0.0f;	// z1
 
-			vertices[6] = _width + x + xOffset;	// x2
-			vertices[7] = y + yOffset;	// y2
+			vertices [6] = _width + x + xOffset;	// x2
+			vertices [7] = y + yOffset;	// y2
 			//vertices[8]=0.0f;	// z2
 
-			vertices[9] = _width + x + xOffset;	// x3
-			vertices[10] = _height + y + yOffset;	// y3
+			vertices [9] = _width + x + xOffset;	// x3
+			vertices [10] = _height + y + yOffset;	// y3
 			//vertices[11]=0.0f;	// z3
+			*/
 		}
 		
 		/// <summary>
@@ -327,7 +350,7 @@ namespace NubGameEngine
 			
 			if (index > texture.Width / _width)
 			{
-				throw new ApplicationException ("O sprite " + ToString () + " nao possui um frame de numero " + index);
+				throw new ApplicationException ("The Sprite " + ToString () + " doesn't have a frame of index " + index);
 			}
 			
 			currentFrame = index;
@@ -355,11 +378,16 @@ namespace NubGameEngine
 		
 		public virtual void OnCollision (Collider other)
 		{
-			Console.WriteLine("Collision "+this.ToString());
+			Console.WriteLine ("Collision " + this.ToString ());
 			for (int i = 0; i < behaviourList.Count; i++)
 			{
-				behaviourList[i].OnCollision (other);
+				behaviourList [i].OnCollision (other);
 			}
+		}
+		
+		public void AddChild (Sprite child)
+		{
+			children.Add(child);
 		}
 		
 		public void AddBehaviour (Behaviour newBehaviour)
