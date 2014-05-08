@@ -385,11 +385,64 @@ namespace NubGameEngine
 			}
 		}
 		
+		/// <summary>
+		/// Adds a child Sprite to this Sprite. The child will receive Update and Draw calls and will be translated when Translate is called in this Sprite.
+		/// </summary>
+		/// <param name='child'>
+		/// New child Sprite to be added.
+		/// </param>
 		public void AddChild (Sprite child)
 		{
 			children.Add(child);
 		}
 		
+		/// <summary>
+		/// Gets the child with tag.
+		/// </summary>
+		/// <returns>
+		/// The child with tag or null if it didn't find any.
+		/// </returns>
+		/// <param name='tag'>
+		/// Tag.
+		/// </param>
+		public Sprite GetChildWithTag (string tag)
+		{
+			for (int i = 0; i < children.Count; i++)
+			{
+				if (children[i].tag == tag)
+					return children[i];
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Gets the children with tag.
+		/// </summary>
+		/// <returns>
+		/// The children with tag or null if didn't find any.
+		/// </returns>
+		/// <param name='tag'>
+		/// Tag.
+		/// </param>
+		public Sprite[] GetChildrenWithTag (string tag)
+		{
+			List<Sprite> tagSprites = new List<Sprite>();
+			for (int i = 0; i < children.Count; i++)
+			{
+				if (children[i].tag == tag)
+					tagSprites.Add(children[i]);
+			}
+			if (tagSprites.Count == 0)
+				return null;
+			return tagSprites.ToArray();
+		}
+		
+		/// <summary>
+		/// Adds a Behaviour to the Sprite.
+		/// </summary>
+		/// <param name='newBehaviour'>
+		/// New behaviour.
+		/// </param>
 		public void AddBehaviour (Behaviour newBehaviour)
 		{
 			behaviourList.Add (newBehaviour);
