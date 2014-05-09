@@ -1,4 +1,5 @@
 using System;
+using Sce.PlayStation.Core;
 using Sce.PlayStation.Core.Graphics;
 using System.Collections;
 using System.Collections.Generic;
@@ -61,13 +62,13 @@ namespace NubGameEngine
 				_pivot = value;
 			}
 		}
-		int xOffset = 0;
-		int yOffset = 0;
+		float xOffset = 0;
+		float yOffset = 0;
 		
-		int _width = 0;
-		public int width { get { return _width; } }
-		int _height = 0;
-		public int height { get { return _height; } }
+		float _width = 0;
+		public float width { get { return _width * scale.X; } }
+		float _height = 0;
+		public float height { get { return _height * scale.Y; } }
 		public bool hasAnimationFrames { get; private set; }
 		
 		public Texture2D texture;
@@ -100,6 +101,8 @@ namespace NubGameEngine
 			1.0f,	1.0f,	1.0f,	1.0f,	// 3 bottom right.
 		};
 		
+		Vector2 scale = new Vector2(1, 1);
+		
 		/// <summary>
 		/// Cria um Sprite simples nao animado.
 		/// </summary>
@@ -120,7 +123,7 @@ namespace NubGameEngine
 			SetPosition(vertices[0], vertices[1]);
 		}
 		
-		public Sprite (float x, float y, Texture2D texture, int width, int height, Pivot pivot) : this(x, y, texture, width, height)
+		public Sprite (float x, float y, Texture2D texture, float width, float height, Pivot pivot) : this(x, y, texture, width, height)
 		{
 			this.pivot = pivot;
 			SetPosition(vertices[0], vertices[1]);
@@ -144,7 +147,7 @@ namespace NubGameEngine
 		/// <param name='height'>
 		/// Altura de um unico frame contido na textura.
 		/// </param>
-		public Sprite (float x, float y, Texture2D texture, int width, int height) : base()
+		public Sprite (float x, float y, Texture2D texture, float width, float height) : base()
 		{
 			this.hasAnimationFrames = width > 0 && height > 0;
 			this.texture = texture;
@@ -161,7 +164,7 @@ namespace NubGameEngine
 			}
 		}
 
-		private void InitializeSprite(float x, float y, int width, int height, bool divideSprite)
+		private void InitializeSprite(float x, float y, float width, float height, bool divideSprite)
 		{
 			this._width = width;
 			this._height = height;
@@ -223,8 +226,6 @@ namespace NubGameEngine
 			
 			if (active)
 			{
-				BlinkUpdate ();
-			
 				for (int i = 0; i < behaviourList.Count; i++)
 				{
 					behaviourList [i].Update ();
@@ -330,6 +331,28 @@ namespace NubGameEngine
 			vertices [10] = _height + y + yOffset;	// y3
 			//vertices[11]=0.0f;	// z3
 			*/
+		}
+		
+		public void SetScale (float x, float y)
+		{
+			scale.X = x;
+			scale.Y = y;
+			
+			vertices [0] -= scale.X / 2;	// x0
+			vertices [1] -= scale.Y / 2;	// y0
+			//vertices[2]=0.0f;	// z0
+
+			vertices [3] -= scale.X / 2;	// x1
+			vertices [4] += scale.Y / 2;		// y1
+			//vertices[5]=0.0f;	// z1
+
+			vertices [6] += scale.X / 2;	// x2
+			vertices [7] -= scale.Y / 2;	// y2
+			//vertices[8]=0.0f;	// z2
+
+			vertices [9] += scale.X / 2;	// x3
+			vertices [10] += scale.Y / 2;	// y3
+			//vertices[11]=0.0f;	// z3
 		}
 		
 		/// <summary>
@@ -449,24 +472,12 @@ namespace NubGameEngine
 			newBehaviour.SetSprite(this);
 		}
 		
-		int blinkEffectCounter = 0;
-		public void SetBlinkEffect (int frameDuration)
+		public void SetAlpha (float alpha)
 		{
-			blinkEffectCounter = frameDuration;
+			colors[3] = colors[7] = colors[11] = colors[15] = alpha;
 		}
 		
-		void BlinkUpdate ()
-		{
-			blinkEffectCounter--;
-			if (blinkEffectCounter > 0)
-			{
-				colors[3] = colors[7] = colors[11] = colors[15] = blinkEffectCounter % 2;
-			}
-			else
-			{
-				colors[3] = colors[7] = colors[11] = colors[15] = 1;
-			}
-		}
+		
 	}
 	
 }

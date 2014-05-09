@@ -1,14 +1,15 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="BehaviourPlayerMove.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FireInTheSkyVita.cs">
     <Files>
-      <File FileName="BehaviourPlayerMove.cs" Line="11" Column="4" />
+      <File FileName="Sprite.cs" Line="345" Column="38" />
+      <File FileName="FireInTheSkyVita.cs" Line="56" Column="34" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="NubGameEngine" expanded="True">
-            <Node name="BehaviourPlayerMove.cs" selected="True" />
+            <Node name="FireInTheSkyVita.cs" selected="True" />
           </Node>
         </State>
       </Pad>

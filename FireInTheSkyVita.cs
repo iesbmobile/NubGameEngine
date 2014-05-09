@@ -6,6 +6,7 @@ namespace NubGameEngine
 	public class FireInTheSkyVita : Game
 	{
 		Sprite projectile;
+		Sprite player;
 		
 		public FireInTheSkyVita () : base()
 		{
@@ -24,7 +25,7 @@ namespace NubGameEngine
 			road3.AddBehaviour (new BehaviourFloorMove ());
 			
 			Layer playerLayer = new Layer ();
-			Sprite player = new Sprite (Game.rectScreen.Width / 2, Game.rectScreen.Height / 2, new Texture2D ("/Application/resource/textures/plane.png", false), 164, 128, Pivot.Center);
+			player = new Sprite (Game.rectScreen.Width / 2, Game.rectScreen.Height / 2, new Texture2D ("/Application/resource/textures/plane.png", false), 164, 128, Pivot.Center);
 			Animation helix = new Animation (player, "Spin", 50L, 0, 3);
 			helix.Play (true);
 			playerLayer.AddSprite (player);
@@ -39,8 +40,10 @@ namespace NubGameEngine
 			level1.AddLayer(projectiles);
 			level1.AddLayer(playerLayer);
 			level1.AddLayer(background);
+			
 		}
 		
+		float scale = 1;
 		protected override void Update ()
 		{
 			base.Update ();
@@ -48,6 +51,9 @@ namespace NubGameEngine
 			projectile.Translate(0, -10);
 			if (projectile.y < 0)
 				projectile.SetPosition(Game.rectScreen.Width/2, Game.rectScreen.Height);
+			
+			scale += 0.01f;
+			player.SetScale(scale, scale);
 		}
 		
 	}
