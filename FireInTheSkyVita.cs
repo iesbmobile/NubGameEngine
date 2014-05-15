@@ -53,7 +53,7 @@ namespace NubGameEngine
 				projectile.SetPosition(Game.rectScreen.Width/2, Game.rectScreen.Height);
 			
 			scale += 0.01f;
-			player.SetScale(scale, scale);
+			//player.SetScale(scale, scale);
 		}
 		
 	}

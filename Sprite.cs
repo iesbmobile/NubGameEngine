@@ -477,6 +477,25 @@ namespace NubGameEngine
 			colors[3] = colors[7] = colors[11] = colors[15] = alpha;
 		}
 		
+		public void SetColor (float r, float g, float b, float a)
+		{
+			colors[0] = r;
+			colors[1] = g;
+			colors[2] = b;
+			colors[3] = a;
+			colors[4] = r;
+			colors[5] = g;
+			colors[6] = b;
+			colors[7] = a;
+			colors[8] = r;
+			colors[9] = g;
+			colors[10] = b;
+			colors[11] = a;
+			colors[12] = r;
+			colors[13] = g;
+			colors[14] = b;
+			colors[15] = a;
+		}
 		
 	}
 	
