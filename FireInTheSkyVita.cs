@@ -5,7 +5,6 @@ namespace NubGameEngine
 {
 	public class FireInTheSkyVita : Game
 	{
-		Sprite projectile;
 		Sprite player;
 		
 		public FireInTheSkyVita () : base()
@@ -25,34 +24,37 @@ namespace NubGameEngine
 			road3.AddBehaviour (new BehaviourFloorMove ());
 			
 			Layer playerLayer = new Layer ();
-			player = new Sprite (Game.rectScreen.Width / 2, Game.rectScreen.Height / 2, new Texture2D ("/Application/resource/textures/plane.png", false), 164, 128, Pivot.Center);
+			player = new Sprite (Game.rectScreen.Width / 2, 400, new Texture2D ("/Application/resource/textures/plane.png", false), 164, 128, Pivot.Center);
+			player.tag = "player";
 			Animation helix = new Animation (player, "Spin", 50L, 0, 3);
 			helix.Play (true);
 			playerLayer.AddSprite (player);
 			player.AddCollider (100, 100);
-			player.AddBehaviour(new BehaviourPlayerMove());
+			player.AddBehaviour(new BehaviourPlayerMove(player));
 			
 			Layer projectiles = new Layer();
-			projectile = new Sprite(Game.rectScreen.Width/2, Game.rectScreen.Height, new Texture2D("/Application/resource/textures/shot.png", false), Pivot.Center);
-			projectiles.AddSprite(projectile);
-			projectile.AddCollider(10, 10);
+			player.AddBehaviour(new BehaviourPlayerShoot(projectiles));
+			player.AddBehaviour(new BehaviourDestroyable("enemy"));
 			
-			level1.AddLayer(projectiles);
+			//---------Enemy
+			Layer enemiesLayer = new Layer ();
+			Sprite enemy = new Sprite (Game.rectScreen.Width / 2, 100, new Texture2D ("/Application/resource/textures/airplane.png", false), 164, 128, Pivot.Center);
+			enemiesLayer.AddSprite(enemy);
+			enemy.AddCollider (100, 100);
+			enemy.AddBehaviour(new BehaviourDestroyable("player"));
+			
 			level1.AddLayer(playerLayer);
+			level1.AddLayer(projectiles);
+			level1.AddLayer(enemiesLayer);
 			level1.AddLayer(background);
 			
 		}
 		
-		float scale = 1;
+//		float scale = 1;
 		protected override void Update ()
 		{
 			base.Update ();
 			
-			projectile.Translate(0, -10);
-			if (projectile.y < 0)
-				projectile.SetPosition(Game.rectScreen.Width/2, Game.rectScreen.Height);
-			
-			scale += 0.01f;
 			//player.SetScale(scale, scale);
 		}
 		

@@ -50,6 +50,11 @@
     <Compile Include="BehaviourFloorMove.cs" />
     <Compile Include="LayerBackground.cs" />
     <Compile Include="BehaviourPlayerMove.cs" />
+    <Compile Include="BehaviourPlayerShoot.cs" />
+    <Compile Include="Shot.cs" />
+    <Compile Include="BehaviourDestroyable.cs" />
+    <Compile Include="BehaviourSpriteFlash.cs" />
+    <Compile Include="BehaviourShot.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />

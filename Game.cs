@@ -112,6 +112,7 @@ namespace NubGameEngine
 			{
 				for (int j = i+1; j < colliderList.Count; j++)
 				{
+					if (Game.colliderList[i].sprite.active && colliderList [j].sprite.active)
 					Game.colliderList[i].CheckCollision(colliderList [j]);
 				}
 			}

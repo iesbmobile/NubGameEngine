@@ -103,6 +103,8 @@ namespace NubGameEngine
 		
 		Vector2 scale = new Vector2(1, 1);
 		
+		BehaviourSpriteFlash flash = new BehaviourSpriteFlash();
+		
 		/// <summary>
 		/// Cria um Sprite simples nao animado.
 		/// </summary>
@@ -215,6 +217,7 @@ namespace NubGameEngine
 			//												vertex pos,               texture,       color
 			vertexBuffer = new VertexBuffer(4, indexSize, VertexFormat.Float3, VertexFormat.Float2, VertexFormat.Float4);
 			//SetPosition(x, y);
+			AddBehaviour(flash);
 		}
 		
 		/// <summary>
@@ -401,7 +404,7 @@ namespace NubGameEngine
 		
 		public virtual void OnCollision (Collider other)
 		{
-			Console.WriteLine ("Collision " + this.ToString ());
+			//Console.WriteLine ("Collision " + this.ToString ());
 			for (int i = 0; i < behaviourList.Count; i++)
 			{
 				behaviourList [i].OnCollision (other);
@@ -495,6 +498,11 @@ namespace NubGameEngine
 			colors[13] = g;
 			colors[14] = b;
 			colors[15] = a;
+		}
+		
+		public void FlashForMiliseconds(long mili)
+		{
+			flash.FlashForMiliseconds(mili);
 		}
 		
 	}
